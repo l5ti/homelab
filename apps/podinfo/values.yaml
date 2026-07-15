@@ -1,0 +1,17 @@
+replicaCount: 1
+
+ui:
+  message: "Hello from podinfo via Argo CD and Helm"
+
+service:
+  type: ClusterIP
+  port: 9898
+
+ingress:
+  enabled: true
+  className: traefik
+  hosts:
+    - host: podinfo.local
+      paths:
+        - path: /
+          pathType: Prefix

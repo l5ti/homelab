@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: podinfo
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://stefanprodan.github.io/podinfo
+    chart: podinfo
+    targetRevision: 6.1.4
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |
+        replicaCount: 1
+
+        ui:
+          message: "Hello from podinfo via Argo CD and Helm"
+
+        service:
+          type: ClusterIP
+          port: 9898
+
+        ingress:
+          enabled: true
+          className: traefik
+          hosts:
+            - host: podinfo.local
+              paths:
+                - path: /
+                  pathType: Prefix
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: podinfo
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
