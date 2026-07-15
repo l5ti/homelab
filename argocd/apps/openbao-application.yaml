@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openbao
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://openbao.github.io/openbao-helm
+    chart: openbao
+    targetRevision: 0.28.3
+    helm:
+      values: |
+        server:
+          dev:
+            enabled: true
+            devRootToken: "root"
+
+          standalone:
+            enabled: false
+
+          ha:
+            enabled: false
+
+        ui:
+          enabled: true
+          serviceType: ClusterIP
+
+        injector:
+          enabled: false
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openbao
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
