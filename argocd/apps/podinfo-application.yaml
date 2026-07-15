@@ -17,7 +17,7 @@ spec:
         replicaCount: 1
 
         ui:
-          message: "Hello from podinfo via Argo CD and Helm"
+          message: "Hello from Dominicks podinfo via Argo CD and Helm"
 
         service:
           type: ClusterIP
