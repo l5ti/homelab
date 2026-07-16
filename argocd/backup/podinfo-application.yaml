@@ -14,10 +14,10 @@ spec:
       valueFiles:
         - values.yaml
       values: |
-        replicaCount: 2
+        replicaCount: 1
 
         ui:
-          message: "Hello from Dominick's podinfo via Argo CD and Helm"
+          message: "Hello from podinfo via Argo CD and Helm"
 
         service:
           type: ClusterIP
